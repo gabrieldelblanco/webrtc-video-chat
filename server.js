@@ -14,13 +14,8 @@ app.use(bodyParser.json());
 
 app.io = socketIo(http);
 
-const port = process.env.PORT || 8000;
-
-//TODO: delete this, it's only for testing....
-app.get("/test", function (req, res) {
-  const test = { hello: "world" };
-  res.json(test);
-});
+var chatRoutes = require("./routes/chat")(app.io);
+app.use("/chat", chatRoutes);
 
 if (process.env.NODE_ENV === "production") {
   app.use(express.static("client-web/build"));
@@ -28,6 +23,8 @@ if (process.env.NODE_ENV === "production") {
     res.sendFile(res.sendFile(path.resolve(__dirname, "client-web", "build", "index.html")));
   });
 }
+
+const port = process.env.PORT || 8000;
 
 http.listen(port, function () {
   log.log(`Server listening on port ${port}`);

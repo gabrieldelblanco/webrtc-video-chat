@@ -1,30 +1,27 @@
-import React from "react";
-import axios from "axios";
-import logo from "./logo.svg";
+import React, { Suspense, lazy } from "react";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+
+import Loading from "./Components/Loading";
+
 import "./App.css";
 
-function App() {
-  React.useEffect(() => {
-    const testApi = async () => {
-      //const response = await axios.get("/test", { baseURL: "http://localhost:8000" });
-      const response = await axios.get("/test");
-      console.log("api response received.", response);
-    };
-    testApi();
-  }, []);
+const Home = lazy(() => import("./Screens/Home/Home"));
+const Chat = lazy(() => import("./Screens/Chat/Chat"));
 
+function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a className="App-link" href="https://reactjs.org" target="_blank" rel="noopener noreferrer">
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <Suspense fallback={<Loading />}>
+        <Switch>
+          <Route path="/chat/:id">
+            <Chat />
+          </Route>
+          <Route path="/">
+            <Home />
+          </Route>
+        </Switch>
+      </Suspense>
+    </Router>
   );
 }
 

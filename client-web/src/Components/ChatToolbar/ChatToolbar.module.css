@@ -1,0 +1,37 @@
+body {
+  background-color: blue;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 50px;
+  border-radius: 10px;
+  background: #16171a;
+}
+
+.button {
+  padding: 10px;
+  position: relative;
+  color: gray;
+}
+
+.title {
+  position: absolute;
+  left: 55px;
+  white-space: nowrap;
+  top: 0px;
+  color: #fff;
+  display: none;
+  transform: translateY(50%);
+}
+
+.button:hover {
+  color: #fff;
+}
+
+.button:hover .title {
+  display: block;
+}

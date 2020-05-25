@@ -1,0 +1,74 @@
+.chat-container {
+  display: flex;
+  flex-direction: row;
+  height: 100%;
+  width: 100%;
+}
+
+.videos {
+  height: 100%;
+  width: 100%;
+  display: block;
+  position: relative;
+}
+
+.videowindow {
+  position: absolute;
+  top: 0;
+  box-sizing: border-box;
+
+  /* background-color: chocolate; */
+}
+
+.videowindow.small {
+  box-shadow: inset 0px 0px 0px 2px red;
+}
+
+.videowindow.big {
+  box-shadow: inset 0px 0px 0px 2px blue;
+}
+
+.videowindow.small {
+  z-index: 100;
+  width: 300px;
+  /* cursor: move; */
+}
+
+.chat-container .movable {
+  z-index: 999;
+  cursor: move;
+}
+
+.videowindow.big {
+  z-index: 1;
+  max-width: 100%;
+  height: 100%;
+  left: 50%;
+  top: 50%;
+  transform: translateX(-50%) translateY(-50%);
+}
+
+.status {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  bottom: 0;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  width: 100%;
+  height: 30px;
+  background-color: #040404;
+  color: #ffffff;
+  opacity: 0.5;
+  z-index: 999;
+}
+
+.status p {
+  margin-left: 20px;
+}
+
+.toolbar {
+  background-color: chocolate;
+  height: 100%;
+  width: 100px;
+}
