@@ -20,7 +20,7 @@ app.use("/chat", chatRoutes);
 if (process.env.NODE_ENV === "production") {
   app.use(express.static("client-web/build"));
   app.get("*", (req, res) => {
-    res.sendFile(res.sendFile(path.resolve(__dirname, "client-web", "build", "index.html")));
+    res.sendFile(path.resolve(__dirname, "client-web", "build", "index.html"));
   });
 }
 
