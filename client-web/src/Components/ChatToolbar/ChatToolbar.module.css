@@ -1,5 +1,5 @@
-body {
-  background-color: blue;
+.toolbar {
+  z-index: 200;
 }
 
 .container {
@@ -9,10 +9,11 @@ body {
   justify-content: center;
   width: 50px;
   border-radius: 10px;
-  background: #16171a;
+  background: #30333a;
 }
 
 .button {
+  z-index: 200;
   padding: 10px;
   position: relative;
   color: gray;
@@ -20,7 +21,7 @@ body {
 
 .title {
   position: absolute;
-  left: 55px;
+  right: 55px;
   white-space: nowrap;
   top: 0px;
   color: #fff;

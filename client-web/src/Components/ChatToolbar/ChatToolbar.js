@@ -5,8 +5,8 @@ import { FaPhoneSlash, FaMicrophoneSlash, FaClosedCaptioning, FaExternalLinkAlt 
 const ButtonItem = ({ Icon, title, onClick }) => {
   return (
     <div className={styles.button} onClick={onClick}>
-      <Icon size="1.5em" />
       <div className={styles.title}>{title}</div>
+      <Icon size="1.5em" />
     </div>
   );
 };

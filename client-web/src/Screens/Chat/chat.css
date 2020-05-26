@@ -16,22 +16,15 @@
   position: absolute;
   top: 0;
   box-sizing: border-box;
-
-  /* background-color: chocolate; */
 }
 
 .videowindow.small {
   box-shadow: inset 0px 0px 0px 2px red;
 }
 
-.videowindow.big {
-  box-shadow: inset 0px 0px 0px 2px blue;
-}
-
 .videowindow.small {
   z-index: 100;
   width: 300px;
-  /* cursor: move; */
 }
 
 .chat-container .movable {
@@ -68,7 +61,8 @@
 }
 
 .toolbar {
-  background-color: chocolate;
-  height: 100%;
-  width: 100px;
+  position: absolute;
+  right: 20px;
+  top: 20px;
+  z-index: 200;
 }

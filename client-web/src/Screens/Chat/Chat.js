@@ -6,6 +6,7 @@ import { startCall } from "../../Apis/chat";
 import Draggable from "react-draggable";
 
 import useSocket from "../../Hooks/useSocket";
+import ChatToolbar from "../../Components/ChatToolbar/ChatToolbar";
 import "./chat.css";
 
 const Chat = () => {
@@ -81,7 +82,7 @@ const Chat = () => {
     right: videosDiv && smallDiv ? videosDiv.clientWidth - smallDiv.clientWidth - 100 : 0, //to do: calcular en el video resize y sacar el -100
     bottom: videosDiv && smallDiv ? videosDiv.clientHeight - smallDiv.clientHeight - 200 : 0,
   };
-  console.log(bounds);
+  //console.log(bounds);
   //bounds={{ top: 0, left: 0, right: 300, bottom: 300 }}
   return (
     <div className="chat-container">
@@ -99,7 +100,9 @@ const Chat = () => {
           <p>{status}</p>
         </div>
       </div>
-      <div className="toolbar"></div>
+      <div className="toolbar">
+        <ChatToolbar />
+      </div>
     </div>
   );
 };
