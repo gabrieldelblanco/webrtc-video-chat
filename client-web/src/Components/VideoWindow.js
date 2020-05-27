@@ -22,7 +22,6 @@ const VideoWindow = ({ stream, muted, className, isBig }) => {
       autoPlay
       playsInline
       ref={windowRef}
-      //style={{ borderRadius: "15px", borderStyle: "solid", borderColor: "red", width: "300px", margin: "5px" }}
     ></video>
   );
 };

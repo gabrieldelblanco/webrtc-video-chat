@@ -19,7 +19,6 @@ const Home = () => {
 
     setIsLoading(true);
     const response = await createRoom();
-    console.log(response);
     setIsLoading(false);
 
     if (response.success) {

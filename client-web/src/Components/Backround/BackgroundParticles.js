@@ -11,6 +11,8 @@ const Background = () => {
       color: ["#DA0463", "#404B69", "#DBEDF3"],
       connectParticles: true,
     });
+
+    window.particles = particles;
   }, []);
 
   const canvas = <canvas className="background"></canvas>;

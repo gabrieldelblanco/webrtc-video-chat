@@ -25,9 +25,11 @@
 .videowindow.small {
   z-index: 100;
   width: 300px;
+  height: 225px;
 }
 
 .chat-container .movable {
+  position: absolute;
   z-index: 999;
   cursor: move;
 }

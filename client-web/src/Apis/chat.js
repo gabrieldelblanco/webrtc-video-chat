@@ -65,7 +65,6 @@ const waitConnection = async (room, localStream, remoteStream, socket) => {
 const createOffer = async (room, peerConnection, socket) => {
   const offer = await peerConnection.createOffer();
   await peerConnection.setLocalDescription(offer);
-  console.log("Created offer:", offer);
 
   const roomWithOffer = {
     offer: {
@@ -76,7 +75,7 @@ const createOffer = async (room, peerConnection, socket) => {
   socket.emit("offer", { room, offer: roomWithOffer });
 };
 
-export const startCall = async (chatId, localStream, remoteStream, socket) => {
+export const startCall = async (chatId, localStream, remoteStream, socket, events) => {
   const room = chatId;
   socket.emit("join", room);
 
@@ -87,7 +86,6 @@ export const startCall = async (chatId, localStream, remoteStream, socket) => {
   }
 
   socket.on("answer", ({ answer }) => {
-    console.log("Got answer:", answer);
     peerConnection.setRemoteDescription(new RTCSessionDescription(answer));
   });
 
@@ -95,7 +93,6 @@ export const startCall = async (chatId, localStream, remoteStream, socket) => {
     console.log("Got offer:", offer);
     await peerConnection.setRemoteDescription(new RTCSessionDescription(offer));
     const answer = await peerConnection.createAnswer();
-    console.log("Created answer:", answer);
     await peerConnection.setLocalDescription(answer);
 
     const roomWithAnswer = {
@@ -107,5 +104,13 @@ export const startCall = async (chatId, localStream, remoteStream, socket) => {
     socket.emit("answer", { room, answer: roomWithAnswer });
   });
 
+  socket.on("endCall", () => {
+    events && events.onEndCall && events.onEndCall();
+  });
+
   return { success: true };
+};
+
+export const endCall = (chatId, socket) => {
+  socket.emit("endCall", { room: chatId });
 };

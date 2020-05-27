@@ -60,6 +60,11 @@ module.exports = function (io) {
       log("answer", room);
       socket.broadcast.to(room).emit("answer", answer);
     });
+
+    socket.on("endCall", ({ room }) => {
+      log("endCall", room);
+      socket.broadcast.to(room).emit("endCall");
+    });
   });
   return router;
 };

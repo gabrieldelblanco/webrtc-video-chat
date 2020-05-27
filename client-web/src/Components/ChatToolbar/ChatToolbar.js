@@ -18,9 +18,9 @@ const ChatToolbar = ({ onClick }) => {
 
   return (
     <div className={styles.container}>
-      <ButtonItem Icon={FaPhoneSlash} title="Cortar llamada" onClick={() => onClickHandler("endCall")} />
-      <ButtonItem Icon={FaMicrophoneSlash} title="Apagar micrófono" onClick={() => onClickHandler("mute")} />
-      <ButtonItem Icon={FaClosedCaptioning} title="Subtítulos" onClick={() => onClickHandler("subtitles")} />
+      <ButtonItem Icon={FaPhoneSlash} title="End call" onClick={() => onClickHandler("endCall")} />
+      <ButtonItem Icon={FaMicrophoneSlash} title="Mute" onClick={() => onClickHandler("mute")} />
+      <ButtonItem Icon={FaClosedCaptioning} title="Captions" onClick={() => onClickHandler("subtitles")} />
       <ButtonItem Icon={FaExternalLinkAlt} title="Picture in Picture" onClick={() => onClickHandler("pip")} />
     </div>
   );

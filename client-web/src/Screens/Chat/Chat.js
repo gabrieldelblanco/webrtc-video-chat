@@ -1,8 +1,8 @@
 import React from "react";
 import VideoWindow from "../../Components/VideoWindow";
-import { useParams, useLocation } from "react-router-dom";
+import { useParams, useHistory } from "react-router-dom";
 
-import { startCall } from "../../Apis/chat";
+import { startCall, endCall } from "../../Apis/chat";
 import Draggable from "react-draggable";
 
 import useSocket from "../../Hooks/useSocket";
@@ -12,6 +12,7 @@ import "./chat.css";
 const Chat = () => {
   let { id } = useParams();
   let socket = useSocket("chatio");
+  let history = useHistory();
 
   const [status, setStatus] = React.useState("waiting");
 
@@ -19,7 +20,11 @@ const Chat = () => {
   const [remoteStream, setRemoteStream] = React.useState(null);
   const [windowStreams, setWindowStreams] = React.useState({ big: null, small: null });
 
-  const [big, setBig] = React.useState("remote");
+  const draggableRef = React.useRef(null);
+
+  const onEndCall = () => {
+    history.push("/");
+  };
 
   React.useEffect(() => {
     let stream = null;
@@ -47,15 +52,16 @@ const Chat = () => {
 
   React.useEffect(() => {
     const initRoom = async () => {
-      setStatus("Esperando conexión...");
-      const result = await startCall(id, localStream, remoteStream, socket);
+      setStatus("Waiting for conection...");
+      const events = { onEndCall: onEndCall };
+      const result = await startCall(id, localStream, remoteStream, socket, events);
       if (result.success) {
-        setStatus("Conexión exitosa");
+        setStatus("Connected!");
       } else {
         if (result.error && result.error === "full") {
-          setStatus("Error. No se puede unir a la sesión.");
+          setStatus("Error. Room is full.");
         } else {
-          setStatus("Error de conexión");
+          setStatus("Connection error");
         }
       }
     };
@@ -66,7 +72,6 @@ const Chat = () => {
   }, [localStream, remoteStream, socket]);
 
   const switchVideos = () => {
-    //setBig(big === "local" ? "remote" : "local");
     if (windowStreams.big === remoteStream) {
       setWindowStreams({ big: localStream, small: remoteStream });
     } else {
@@ -74,34 +79,28 @@ const Chat = () => {
     }
   };
 
-  const videosDiv = document.getElementById("videos");
-  const smallDiv = document.getElementsByClassName("small-video")[0];
-  const bounds = {
-    top: 0,
-    left: 0,
-    right: videosDiv && smallDiv ? videosDiv.clientWidth - smallDiv.clientWidth - 100 : 0, //to do: calcular en el video resize y sacar el -100
-    bottom: videosDiv && smallDiv ? videosDiv.clientHeight - smallDiv.clientHeight - 200 : 0,
+  const onToolbarClick = (e) => {
+    if (e === "endCall") {
+      endCall(id, socket);
+      onEndCall();
+    }
   };
-  //console.log(bounds);
-  //bounds={{ top: 0, left: 0, right: 300, bottom: 300 }}
+
   return (
     <div className="chat-container">
-      <Draggable bounds={bounds}>
-        <div className="movable" id="movable-video">
-          <VideoWindow stream={windowStreams.small} className="small-video" muted isBig={big === "local"} />
+      <Draggable nodeRef={draggableRef}>
+        <div className="movable" id="movable-video" ref={draggableRef}>
+          <VideoWindow stream={windowStreams.small} className="small-video" muted isBig={false} />
         </div>
-        {/* <div
-          style={{ position: "absolute", backgroundColor: "green", height: "200px", width: "200px", zIndex: 999 }}
-        ></div> */}
       </Draggable>
       <div id="videos" className="videos" onClick={switchVideos}>
-        <VideoWindow stream={windowStreams.big} muted className="big-video" isBig={big === "remote"} />
+        <VideoWindow stream={windowStreams.big} muted className="big-video" isBig={true} />
         <div className="status">
           <p>{status}</p>
         </div>
       </div>
       <div className="toolbar">
-        <ChatToolbar />
+        <ChatToolbar onClick={onToolbarClick} />
       </div>
     </div>
   );
