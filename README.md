@@ -7,14 +7,17 @@ This is just a sample webrtc video chat protottype, with the following architect
 * communication with clients is mainly done through [socket.io](https://github.com/socketio/socket.io) 
 * the client (frontend) is implemented in ReactJS. Backend and Frontend can run in completely different servers (if needed)
 
+## Demo
+[gdb-video-chat](https://gdb-video-chat.herokuapp.com/)
+
 ## Quick Start
 * You need to have Node.js installed
 * Clone this repo
-`git clone https://github.com/gabrieldelblanco/webrtc-video-chat/
-cd webrtc-video-chat`
+`git clone https://github.com/gabrieldelblanco/webrtc-video-chat/`
+`cd webrtc-video-chat`
 * Install dependencies 
-`npm install
-cd client-web && npm install`
+`npm install`
+`cd client-web && npm install`
 * Run the server 
 `npm run server`
 * Start web client
