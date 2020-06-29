@@ -2,7 +2,7 @@ import React from "react";
 import VideoWindow from "../../Components/VideoWindow";
 import { useParams, useHistory } from "react-router-dom";
 
-import { startCall, endCall } from "../../Apis/chat";
+import { startCall, endCall, toggleMute } from "../../Apis/chat";
 import Draggable from "react-draggable";
 
 import useSocket from "../../Hooks/useSocket";
@@ -19,6 +19,9 @@ const Chat = () => {
   const [localStream, setLocalStream] = React.useState(null);
   const [remoteStream, setRemoteStream] = React.useState(null);
   const [windowStreams, setWindowStreams] = React.useState({ big: null, small: null });
+
+  const [peerConnection, setPeerConnection] = React.useState(null);
+  const [isMuted, setIsMuted] = React.useState(false);
 
   const draggableRef = React.useRef(null);
 
@@ -57,6 +60,7 @@ const Chat = () => {
       const result = await startCall(id, localStream, remoteStream, socket, events);
       if (result.success) {
         setStatus("Connected!");
+        setPeerConnection(result.peerConnection);
       } else {
         if (result.error && result.error === "full") {
           setStatus("Error. Room is full.");
@@ -80,9 +84,14 @@ const Chat = () => {
   };
 
   const onToolbarClick = (e) => {
-    if (e === "endCall") {
-      endCall(id, socket);
-      onEndCall();
+    switch (e.tool) {
+      case "endCall":
+        endCall(id, socket);
+        onEndCall();
+        break;
+      case "mute":
+        setIsMuted(toggleMute(peerConnection));
+        break;
     }
   };
 
@@ -90,17 +99,27 @@ const Chat = () => {
     <div className="chat-container">
       <Draggable nodeRef={draggableRef}>
         <div className="movable" id="movable-video" ref={draggableRef}>
-          <VideoWindow stream={windowStreams.small} className="small-video" muted isBig={false} />
+          <VideoWindow
+            stream={windowStreams.small}
+            className="small-video"
+            muted={windowStreams.small === localStream}
+            isBig={false}
+          />
         </div>
       </Draggable>
       <div id="videos" className="videos" onClick={switchVideos}>
-        <VideoWindow stream={windowStreams.big} muted className="big-video" isBig={true} />
+        <VideoWindow
+          stream={windowStreams.big}
+          muted={windowStreams.big === localStream}
+          className="big-video"
+          isBig={true}
+        />
         <div className="status">
           <p>{status}</p>
         </div>
       </div>
       <div className="toolbar">
-        <ChatToolbar onClick={onToolbarClick} />
+        <ChatToolbar onClick={onToolbarClick} isMuted={isMuted} />
       </div>
     </div>
   );

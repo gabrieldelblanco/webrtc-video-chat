@@ -1,6 +1,6 @@
-import React from "react";
+import React, { useState } from "react";
 import styles from "./ChatToolbar.module.css";
-import { FaPhoneSlash, FaMicrophoneSlash, FaClosedCaptioning, FaExternalLinkAlt } from "react-icons/fa";
+import { FaPhoneSlash, FaMicrophoneSlash, FaMicrophone, FaClosedCaptioning, FaExternalLinkAlt } from "react-icons/fa";
 
 const ButtonItem = ({ Icon, title, onClick }) => {
   return (
@@ -11,15 +11,19 @@ const ButtonItem = ({ Icon, title, onClick }) => {
   );
 };
 
-const ChatToolbar = ({ onClick }) => {
-  const onClickHandler = (e) => {
-    onClick && onClick(e);
+const ChatToolbar = ({ onClick, isMuted }) => {
+  const onClickHandler = (e, options) => {
+    const parameters = { ...options, tool: e };
+    onClick && onClick(parameters);
   };
+
+  const muteTitle = isMuted ? "Unmute" : "Mute";
+  const muteIcon = isMuted ? FaMicrophoneSlash : FaMicrophone;
 
   return (
     <div className={styles.container}>
       <ButtonItem Icon={FaPhoneSlash} title="End call" onClick={() => onClickHandler("endCall")} />
-      <ButtonItem Icon={FaMicrophoneSlash} title="Mute" onClick={() => onClickHandler("mute")} />
+      <ButtonItem Icon={muteIcon} title={muteTitle} onClick={() => onClickHandler("mute")} />
       <ButtonItem Icon={FaClosedCaptioning} title="Captions" onClick={() => onClickHandler("subtitles")} />
       <ButtonItem Icon={FaExternalLinkAlt} title="Picture in Picture" onClick={() => onClickHandler("pip")} />
     </div>

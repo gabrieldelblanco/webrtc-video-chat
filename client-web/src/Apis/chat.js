@@ -90,7 +90,7 @@ export const startCall = async (chatId, localStream, remoteStream, socket, event
   });
 
   socket.on("offer", async ({ offer }) => {
-    console.log("Got offer:", offer);
+    //console.log("Got offer:", offer);
     await peerConnection.setRemoteDescription(new RTCSessionDescription(offer));
     const answer = await peerConnection.createAnswer();
     await peerConnection.setLocalDescription(answer);
@@ -108,9 +108,24 @@ export const startCall = async (chatId, localStream, remoteStream, socket, event
     events && events.onEndCall && events.onEndCall();
   });
 
-  return { success: true };
+  return { success: true, peerConnection };
 };
 
 export const endCall = (chatId, socket) => {
   socket.emit("endCall", { room: chatId });
+};
+
+export const toggleMute = (peerConnection) => {
+  if (peerConnection === null) return false;
+
+  let { track } = peerConnection.getSenders().find((c) => c.track.kind === "audio");
+
+  console.log(track);
+  if (track) {
+    const isNowMuted = !track.muted;
+    track.enabled = !isNowMuted;
+    return isNowMuted;
+  }
+
+  return false;
 };
