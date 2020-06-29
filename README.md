@@ -17,10 +17,10 @@ This is just a sample webrtc video chat prototype, with the following architectu
 `cd webrtc-video-chat`
 * Install dependencies 
 `npm install`
-`cd client-web && npm install`
+`cd client-web && npm install && cd ..`
 * Run the server 
 `npm run server`
 * Start web client
 `cd client-web && npm start`
-* Open `localhost:8000` in browser
+* Open `localhost:3000` in your browser
 
