@@ -1,7 +1,7 @@
 # webrtc-video-chat
 Video Chat Application using WebRTC, Node JS and React JS.  
 
-This is just a sample webrtc video chat protottype, with the following architecture:
+This is just a sample webrtc video chat prototype, with the following architecture:
 
 * the backend is implemented in Node JS, 
 * communication with clients is mainly done through [socket.io](https://github.com/socketio/socket.io) 
