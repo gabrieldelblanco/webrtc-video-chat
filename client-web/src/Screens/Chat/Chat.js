@@ -9,12 +9,15 @@ import useSocket from "../../Hooks/useSocket";
 import ChatToolbar from "../../Components/ChatToolbar/ChatToolbar";
 import "./chat.css";
 
+import ShareLink from "../../Components/ShareLink/ShareLink";
+
 const Chat = () => {
   let { id } = useParams();
   let socket = useSocket("chatio");
   let history = useHistory();
 
   const [status, setStatus] = React.useState("waiting");
+  const [isWaiting, setIsWaiting] = React.useState(true);
 
   const [localStream, setLocalStream] = React.useState(null);
   const [remoteStream, setRemoteStream] = React.useState(null);
@@ -59,6 +62,7 @@ const Chat = () => {
       const events = { onEndCall: onEndCall };
       const result = await startCall(id, localStream, remoteStream, socket, events);
       if (result.success) {
+        setIsWaiting(false);
         setStatus("Connected!");
         setPeerConnection(result.peerConnection);
       } else {
@@ -97,6 +101,11 @@ const Chat = () => {
 
   return (
     <div className="chat-container">
+      {isWaiting && (
+        <div className="sharelink">
+          <ShareLink link={window.location.href} />
+        </div>
+      )}
       <Draggable nodeRef={draggableRef}>
         <div className="movable" id="movable-video" ref={draggableRef}>
           <VideoWindow

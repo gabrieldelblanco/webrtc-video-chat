@@ -17,15 +17,23 @@ const ChatToolbar = ({ onClick, isMuted }) => {
     onClick && onClick(parameters);
   };
 
-  const muteTitle = isMuted ? "Unmute" : "Mute";
+  const muteTitle = isMuted ? "Unmute (not implemented yet)" : "Mute (not implemented yet)";
   const muteIcon = isMuted ? FaMicrophoneSlash : FaMicrophone;
 
   return (
     <div className={styles.container}>
       <ButtonItem Icon={FaPhoneSlash} title="End call" onClick={() => onClickHandler("endCall")} />
       <ButtonItem Icon={muteIcon} title={muteTitle} onClick={() => onClickHandler("mute")} />
-      <ButtonItem Icon={FaClosedCaptioning} title="Captions" onClick={() => onClickHandler("subtitles")} />
-      <ButtonItem Icon={FaExternalLinkAlt} title="Picture in Picture" onClick={() => onClickHandler("pip")} />
+      <ButtonItem
+        Icon={FaClosedCaptioning}
+        title="Captions (not implemented yet)"
+        onClick={() => onClickHandler("subtitles")}
+      />
+      <ButtonItem
+        Icon={FaExternalLinkAlt}
+        title="Picture in Picture (not implemented yet)"
+        onClick={() => onClickHandler("pip")}
+      />
     </div>
   );
 };

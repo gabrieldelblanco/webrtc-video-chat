@@ -68,3 +68,12 @@
   top: 20px;
   z-index: 200;
 }
+
+.sharelink {
+  position: absolute;
+  bottom: 60px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: block;
+  z-index: 999;
+}
