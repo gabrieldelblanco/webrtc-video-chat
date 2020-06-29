@@ -13,10 +13,10 @@ This is just a sample webrtc video chat prototype, with the following architectu
 ## Quick Start
 * You need to have Node.js installed
 * Clone this repo
-`git clone https://github.com/gabrieldelblanco/webrtc-video-chat/`
+`git clone https://github.com/gabrieldelblanco/webrtc-video-chat/`<br />
 `cd webrtc-video-chat`
 * Install dependencies 
-`npm install`
+`npm install`<br />
 `cd client-web && npm install && cd ..`
 * Run the server 
 `npm run server`
