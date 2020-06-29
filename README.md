@@ -17,7 +17,7 @@ This is just a sample webrtc video chat prototype, with the following architectu
 `cd webrtc-video-chat`
 * Install dependencies <br />
 `npm install`<br />
-`cd client-web && npm install && cd ..`
+`cd client-web && yarn && cd ..`
 * Run the server <br />
 `npm run server`
 * Start web client <br />
